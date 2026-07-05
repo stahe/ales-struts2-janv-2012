@@ -1,0 +1,1576 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Introducción a STRUTS 2 con ejemplos">
+      
+      
+        <meta name="author" content="Serge Tahé">
+      
+      
+        <link rel="canonical" href="https://stahe.github.io/ales-struts2-janv-2012/un-primer-ejemplo.html">
+      
+      
+        <link rel="prev" href="introduccion.html">
+      
+      
+        <link rel="next" href="ejemplo-02---inyeccion-de-parametros-en-la-accion.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>2. Un primer ejemplo - Introducción a STRUTS 2 con ejemplos</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/focus.css">
+    
+      <link rel="stylesheet" href="stylesheets/bidi.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EBZC3JVJNR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var siteName = "Introducción a STRUTS 2 con ejemplos";
+    gtag('config', 'G-EBZC3JVJNR', {
+        'page_title': siteName
+    });
+  </script>
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#2-un-primer-ejemplo" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Introducción a STRUTS 2 con ejemplos" class="md-header__button md-logo" aria-label="Introducción a STRUTS 2 con ejemplos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Introducción a STRUTS 2 con ejemplos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2. Un primer ejemplo
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Cambiar al modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Cambiar al modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Cambiar al modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Cambiar al modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://stahe.github.io/ales-struts2-janv-2012" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Introducción a STRUTS 2 con ejemplos" class="md-nav__button md-logo" aria-label="Introducción a STRUTS 2 con ejemplos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Introducción a STRUTS 2 con ejemplos
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://stahe.github.io/ales-struts2-janv-2012" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bienvenidos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="introduccion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introducción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Un primer ejemplo
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="un-primer-ejemplo.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Un primer ejemplo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#21-generacion-del-ejemplo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Generación del ejemplo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-el-proyecto-generado-en-el-sistema-de-archivos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. El proyecto generado en el sistema de archivos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-el-archivo-de-configuracion-meta-infcontextxml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. El archivo de configuración [META-INF/context.xml]
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-el-archivo-de-configuracion-web-infwebxml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. El archivo de configuración [WEB-INF/web.xml]
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25-el-archivo-de-configuracion-strutsxml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. El archivo de configuración [struts.xml]
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#26-la-accion-helloworld" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6. La acción HelloWorld
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#27-la-vista-helloworldjsp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7. La vista HelloWorld.JSP
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#28-ejecucion-de-la-aplicacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.8. Ejecución de la aplicación
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#29-conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.9. Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ejemplo-02---inyeccion-de-parametros-en-la-accion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Ejemplo 02 – Inyección de parámetros en la acción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ejemplo-03---las-claves-de-navegacion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Ejemplo 03 – Las claves de navegación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ejemplo-04---internacionalizacion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Ejemplo 04 – Internacionalización
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ejemplo-05---el-formulario-de-entrada.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Ejemplo 05 – El formulario de entrada
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ejemplo-05b---navegacion-en-un-formulario-de-entrada.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Ejemplo 05B – Navegación en un formulario de entrada
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ejemplo-06---la-sesion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Ejemplo 06 – La sesión
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ejemplo-07---las-etiquetas-de-formulario.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Ejemplo 07 – Las etiquetas de formulario
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ejemplo-08---las-etiquetas-relacionadas-con-las-listas.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Ejemplo 08 - Las etiquetas relacionadas con las listas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ejemplo-09-conversion-y-validacion-de-numeros-enteros.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Ejemplo 09: Conversión y validación de números enteros
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ejemplo-09b---validacion-del-modelo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Ejemplo 09B – Validación del modelo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ejemplo-10---conversion-y-validacion-de-numeros-reales.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Ejemplo 10 – Conversión y validación de números reales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ejemplo-11---conversion-y-validacion-de-fechas.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Ejemplo 11 – Conversión y validación de fechas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ejemplo-12---conversiones-y-validaciones-diversas.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Ejemplo 12 – Conversiones y validaciones diversas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ejemplo-13-el-contexto-de-una-accion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Ejemplo 13: el contexto de una acción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ejemplo-15---integracion-de-struts-2-y-spring.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Ejemplo 15 – Integración de Struts 2 y Spring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="caso-de-estudio-struts-2--tiles--spring--hibernate--mysql.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Caso de estudio: Struts 2 / Tiles / Spring / Hibernate / MySQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="caso-de-estudio---version-1.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Caso de estudio – versión 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="estudio-de-caso---version-2.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Estudio de caso – versión 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="conclusion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Conclusión
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<p><span id="refheading99631454977699" name="refheading99631454977699" class="odt-bookmark-anchor"></span></p>
+<h1 id="2-un-primer-ejemplo">2. <span style="color: #365f91">Un primer ejemplo</span></h1>
+<p>La mayoría de nuestros ejemplos se limitarán únicamente a la capa web implementada con Struts 2:</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><img src="images/10000000000004080000016CA6FD91FD.png" width="516" height="182" style="display:inline-block; margin:4px;width:13.653cm;height:4.815cm;" class="odt-zoomable" data-zoom-src="images/10000000000004080000016CA6FD91FD.png" /></td></tr></table>
+
+<p>Una vez que hayamos adquirido los conceptos básicos, estudiaremos un ejemplo más complejo con una arquitectura de múltiples capas.</p>
+<p><span id="refheading99651454977699" name="refheading99651454977699" class="odt-bookmark-anchor"></span></p>
+<h2 id="21-generacion-del-ejemplo">2.1. <span style="color: #4f81bd">Generación del ejemplo</span></h2>
+<p>Construimos nuestra primera aplicación.</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><img src="images/10000000000004E800000176113D1205.png" width="628" height="187" style="display:inline-block; margin:4px;width:16.616cm;height:4.948cm;" class="odt-zoomable" data-zoom-src="images/10000000000004E800000176113D1205.png" /></td></tr></table>
+
+<ul>
+  <li>En [1], creamos un nuevo proyecto
+  </li>
+  <li>en [2], elegimos el tipo Java Web / Aplicación web
+  </li>
+  <li>en [3], le damos un nombre al proyecto
+  </li>
+  <li>en [4], indicamos la ubicación del proyecto.
+  </li>
+  <li>En [5], se establece el nuevo proyecto como el proyecto principal.
+  </li>
+</ul>
+
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><img src="images/10000000000004A10000018090296FFE.png" width="593" height="192" style="display:inline-block; margin:4px;width:15.677cm;height:5.08cm;" class="odt-zoomable" data-zoom-src="images/10000000000004A10000018090296FFE.png" /></td></tr></table>
+
+<ul>
+  <li>En [6], se elige el servidor Tomcat. Al instalar NetBeans 7.01, se instalaron dos servidores: Apache Tomcat y GlassFish 3.1.
+  </li>
+  <li>En [7], indicamos que vamos a trabajar con el marco de trabajo Struts 2. Es la instalación del complemento para Struts 2 la que nos brinda esta posibilidad. Sin el complemento, no se nos ofrece el marco de trabajo Struts 2.
+  </li>
+  <li>En [8], se solicita la creación del proyecto de ejemplo que vamos a estudiar.
+  </li>
+  <li>En [9], podemos verificar qué bibliotecas de Struts 2 se utilizarán.
+  </li>
+</ul>
+
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><img src="images/100000000000052000000238141E0E1E.png" width="656" height="284" style="display:inline-block; margin:4px;width:17.357cm;height:7.514cm;" class="odt-zoomable" data-zoom-src="images/100000000000052000000238141E0E1E.png" /></td></tr></table>
+
+<ul>
+  <li>En [10], el proyecto generado. Volveremos a él más adelante.
+  </li>
+  <li>En [11], las bibliotecas del proyecto. Han sido integradas por el complemento de Struts 2. Si no contamos con el complemento, podremos encontrar estas bibliotecas en la carpeta [lib] de la distribución de Struts 2 descargada. En ese caso, seguiremos los pasos 12 y 13.
+  </li>
+</ul>
+
+<p><span id="refheading99671454977699" name="refheading99671454977699" class="odt-bookmark-anchor"></span></p>
+<h2 id="22-el-proyecto-generado-en-el-sistema-de-archivos">2.2. <span style="color: #4f81bd">El proyecto generado en el sistema de archivos</span></h2>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><img src="images/100000000000032A0000023511DD8287.png" width="405" height="283" style="display:inline-block; margin:4px;width:10.716cm;height:7.475cm;" class="odt-zoomable" data-zoom-src="images/100000000000032A0000023511DD8287.png" /></td></tr></table>
+
+<ul>
+  <li>en [1], la pestaña [Projects] presenta una vista de «desarrollador» del proyecto
+  </li>
+  <li>en [2], la pestaña [Files] muestra la carpeta del proyecto en el sistema de archivos
+  </li>
+  <li>en [2A], la rama [Web Pages] se representa en [2] mediante la carpeta [web] [2B]
+  </li>
+  <li>en [3A], la rama [Source Packages] se representa en [2] mediante la carpeta [java] [3B]
+  </li>
+</ul>
+
+<p><span id="refheading99691454977699" name="refheading99691454977699" class="odt-bookmark-anchor"></span></p>
+<h2 id="23-el-archivo-de-configuracion-meta-infcontextxml">2.3. <span style="color: #4f81bd"><strong>El archivo de configuración [META-INF/context.xml]</strong></span></h2>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><img src="images/100000000000038D0000012A727BD6B9.png" width="455" height="149" style="display:inline-block; margin:4px;width:12.026cm;height:3.942cm;" class="odt-zoomable" data-zoom-src="images/100000000000038D0000012A727BD6B9.png" /></td></tr></table>
+
+<p>Este archivo es el siguiente:</p>
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-xml">
+<span class="odt-code-line"><span class="odt-code-line-content">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#800080">&lt;Context</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">antiJARLocking</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">true</span><span style="color:#800080">&quot;</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">path</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">/exemple-01</span><span style="color:#800080">&quot;/&gt;</span></span></span>
+</code></pre></div>
+
+<p>La línea 2 indica que el contexto de la aplicación web es <em>/exemple-01</em>. Todos los URL del tipo [http://machine:port/exemple-01/...] serán procesados por esta aplicación. Este contexto se puede encontrar en las propiedades del proyecto [2]: <em>clic derecho en el proyecto / Propiedades / Ejecutar</em>.</p>
+<p><span id="refheading99711454977699" name="refheading99711454977699" class="odt-bookmark-anchor"></span></p>
+<h2 id="24-el-archivo-de-configuracion-web-infwebxml">2.4. <span style="color: #4f81bd">El archivo de configuración [WEB-INF/web.xml]</span></h2>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><img src="images/10000000000001320000011760484A44.png" width="153" height="140" style="display:inline-block; margin:4px;width:4.048cm;height:3.692cm;" class="odt-zoomable" data-zoom-src="images/10000000000001320000011760484A44.png" /></td></tr></table>
+
+<p>Cada aplicación web se configura mediante el archivo [web.xml], ubicado en la carpeta [WEB-INF] de la aplicación. El archivo generado es el siguiente:</p>
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-xml">
+<span class="odt-code-line"><span class="odt-code-line-content">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#800080">&lt;web-app</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">version</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">3.0</span><span style="color:#800080">&quot;</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">xmlns</span><span style="color:#800080">=&quot;</span><span style="color:#000080">http://java.sun.com/xml/ns/javaee</span><span style="color:#800080">&quot;</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">xmlns:xsi</span><span style="color:#800080">=&quot;</span><span style="color:#000080">http://www.w3.org/2001/XMLSchema-instance</span><span style="color:#800080">&quot;</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">xsi:schemaLocation</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd</span><span style="color:#800080">&quot;&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;filter&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#800080">&lt;filter-name&gt;</span><span style="color:#000000">struts2</span><span style="color:#800080">&lt;/filter-name&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#800080">&lt;filter-class&gt;</span><span style="color:#000000">org.apache.struts2.dispatcher.FilterDispatcher</span><span style="color:#800080">&lt;/filter-class&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;/filter&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;filter-mapping&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#800080">&lt;filter-name&gt;</span><span style="color:#000000">struts2</span><span style="color:#800080">&lt;/filter-name&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">        &lt;URL-pattern&gt;/*&lt;/URL-pattern&gt;</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;/filter-mapping&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;session-config&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#800080">&lt;session-timeout&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">            30</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#800080">&lt;/session-timeout&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;/session-config&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;welcome-file-list&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#800080">&lt;welcome-file&gt;</span><span style="color:#000000">example/HelloWorld.JSP</span><span style="color:#800080">&lt;/welcome-file&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;/welcome-file-list&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">&lt;/web-app&gt;</span></span>
+</code></pre></div>
+
+<ul>
+  <li>Las líneas 3 a 6 definen un filtro implementado por la clase [org.apache.struts2.dispatcher.FilterDispatcher] <span style="color: #000000">de Struts 2. Esta clase desempeñará el papel del controlador C del modelo MVC.</span>
+  </li>
+  <li><span style="color: #000000">Líneas 7-10: definen una asociación entre un modelo URL y el filtro que debe procesar los URL que siguen este modelo. Aquí se indica que todo URL (modelo /*) debe ser procesado por el filtro denominado </span><i><span style="color: #000000">struts2</span></i><span style="color: #000000">. Este es el filtro definido en las líneas 3-6. Por lo tanto, aquí todos los URL pasarán por el controlador de Struts 2.</span>
+  </li>
+  <li><span style="color: #000000">Líneas 11-15: definen la duración de una sesión de usuario, en este caso 30 minutos. Durante las distintas solicitudes, se realiza un seguimiento del usuario mediante un token de sesión que se le asignó en su primera solicitud y que luego envía sistemáticamente con cada nueva solicitud. Esto permite que el servidor web lo reconozca y administre una «memoria» para el usuario, lo que se conoce como sesión. Si transcurren más de 30 minutos entre dos solicitudes, se genera un nuevo token de sesión para el usuario, quien pierde así su «memoria» y comienza una nueva.</span>
+  </li>
+  <li><span style="color: #000000">Líneas 16-18: definen el archivo que se mostrará cuando el usuario acceda a la aplicación web sin solicitar un documento. Así, cuando el URL solicitado sea [http://machine:port/exemple-01], el URL que se entregará será [http://machine:port/exemple-01/example/HelloWord.JSP].</span>
+  </li>
+</ul>
+
+<p><span id="refheading99731454977699" name="refheading99731454977699" class="odt-bookmark-anchor"></span></p>
+<h2 id="25-el-archivo-de-configuracion-strutsxml">2.5. <span style="color: #4f81bd">El archivo de configuración [struts.xml]</span></h2>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><img src="images/10000000000001410000016021401E1E.png" width="161" height="176" style="display:inline-block; margin:4px;width:4.247cm;height:4.657cm;" class="odt-zoomable" data-zoom-src="images/10000000000001410000016021401E1E.png" /></td></tr></table>
+
+<p>El archivo [struts.xml] es el archivo de configuración de Struts 2. Puede estar en cualquier lugar dentro del directorio <em>ClassPath</em> del proyecto. En el proyecto de NetBeans anterior, el directorio <em>ClassPath</em> del proyecto está formado por dos ramas:</p>
+<ul>
+  <li>Paquetes de código fuente
+  </li>
+  <li>Bibliotecas
+  </li>
+</ul>
+
+<p>Por lo tanto, cualquier carpeta o biblioteca ubicada en estas dos ramas forma parte del <em>ClassPath</em> del proyecto. Es habitual colocar el [struts.xml] en &lt;paquete predeterminado&gt;. Aquí, su contenido es el siguiente:</p>
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-java">
+<span class="odt-code-line"><span class="odt-code-line-content">&lt;!DOCTYPE struts PUBLIC</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">&quot;-//Apache Software Foundation//DTD Struts Configuration 2.0//EN&quot;</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">&quot;http://struts.apache.org/dtds/struts-2.0.dtd&quot;&gt;</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">&lt;struts&gt;</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;include</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">file</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">example.xml</span><span style="color:#800080">&quot;/&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">    <span style="color:#000000">&lt;!-- Configuración para el paquete predeterminado. --&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;package</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">name</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">default</span><span style="color:#800080">&quot;</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">extends</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">struts-default</span><span style="color:#800080">&quot;&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;/package&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">&lt;/struts&gt;</span></span>
+</code></pre></div>
+
+<ul>
+  <li>líneas 5 y 10: la etiqueta raíz del documento es la etiqueta &lt;struts&gt;
+  </li>
+  <li>línea 6: el archivo [example.xml] se inserta aquí. Por lo tanto, trae su propia configuración. Volveremos a esto más adelante.
+  </li>
+  <li>líneas 8-9: definen un paquete denominado aquí «default». Un paquete permite configurar un grupo de acciones de Struts 2 que comparten el mismo URL. Por ejemplo, [/chemin/Action1] y [/chemin/Action2]. Entonces, podemos definir un paquete para estas acciones:
+  </li>
+</ul>
+
+<div class="odt-code-rich" data-linenums="false" style="counter-reset: odtline 0;"><pre><code class="language-java">
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#800080">&lt;package</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">name</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">employes</span><span style="color:#800080">&quot;</span><span style="font-style:italic;color:#008080"> namespace=&quot;/employes&quot; </span><span style="color:#808000">extends</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">struts-default</span><span style="color:#800080">&quot;&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">... configuration</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;/package&gt;</span></span></span>
+</code></pre></div>
+
+<p>El paquete anterior se llama «empleados» y configura las acciones de URL y <em>/employes/Action</em>. El paquete puede heredar de otro paquete con la palabra clave «<em>extends</em>». En el ejemplo anterior, el paquete <em>employes</em> hereda del paquete <em>struts-default</em>. Este paquete se encuentra en el archivo [struts-default.xml] de la biblioteca <em>struts2-core.jar</em>:</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><img src="images/100000000000020A000001E9BAD98C48.png" width="261" height="245" style="display:inline-block; margin:4px;width:6.906cm;height:6.47cm;" class="odt-zoomable" data-zoom-src="images/100000000000020A000001E9BAD98C48.png" /></td></tr></table>
+
+<p>El paquete «struts-default», definido en el archivo [struts-default.xml], configura diversos elementos, entre ellos una lista de interceptores que se ejecutan al llamar a una acción. Volvamos a la estructura MVC de una aplicación Struts 2:</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><img src="images/10000000000003E000000164F6B6995C.png" width="496" height="178" style="display:inline-block; margin:4px;width:13.123cm;height:4.71cm;" class="odt-zoomable" data-zoom-src="images/10000000000003E000000164F6B6995C.png" /></td></tr></table>
+
+<p>Para procesar una URL de la forma [http://machine:port/.../Action], el controlador [FilterDispatcher] instanciará la clase que implementa la acción solicitada y ejecutará uno de sus métodos; por defecto, un método llamado <em>execute</em>. La llamada a este método <em>execute</em> pasará por una serie de interceptores:</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><img src="images/100000000000028F0000010554C43458.png" width="328" height="131" style="display:inline-block; margin:4px;width:8.666cm;height:3.454cm;" class="odt-zoomable" data-zoom-src="images/100000000000028F0000010554C43458.png" /></td></tr></table>
+
+<p>Tanto los interceptores como la acción procesan la misma solicitud. La lista de interceptores definida en el paquete <em>struts-default</em> es suficiente en la mayoría de los casos. Por lo tanto, nuestros paquetes de Struts siempre extenderán el paquete <em>struts-default</em>. Para saber qué hacen los diferentes interceptores, consulte el capítulo 4 de [ref2].</p>
+<p>Volvamos al archivo de configuración <em>struts.xml</em>:</p>
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-java">
+<span class="odt-code-line"><span class="odt-code-line-content">&lt;!DOCTYPE struts PUBLIC</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">&quot;-//Apache Software Foundation//DTD Struts Configuration 2.0//EN&quot;</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">&quot;http://struts.apache.org/dtds/struts-2.0.dtd&quot;&gt;</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">&lt;struts&gt;</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;include</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">file</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">example.xml</span><span style="color:#800080">&quot;/&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">    <span style="color:#000000">&lt;!-- Configuración para el paquete predeterminado. --&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;package</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">name</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">default</span><span style="color:#800080">&quot;</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">extends</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">struts-default</span><span style="color:#800080">&quot;&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;/package&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">&lt;/struts&gt;</span></span>
+</code></pre></div>
+
+<ul>
+  <li>línea 8: el paquete denominado <i>default </i>tiene una función especial. Se encarga de las acciones que no se han configurado en los demás paquetes. Aquí, en las líneas 8 y 9, no hay ninguna configuración para el paquete <i>default</i>. Por lo tanto, se podría eliminar la definición de este paquete.
+  </li>
+</ul>
+
+<p>Veamos ahora el archivo [example.xml] incluido en la línea 6 del archivo [struts.xml]:</p>
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-xml">
+<span class="odt-code-line"><span class="odt-code-line-content">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">&lt;!DOCTYPE struts PUBLIC</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">        &quot;-//Apache Software Foundation//DTD Struts Configuration 2.0//EN&quot;</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">        &quot;http://struts.apache.org/dtds/struts-2.0.dtd&quot;&gt;</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">&lt;struts&gt;</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;package</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">name</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">example</span><span style="color:#800080">&quot;</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">namespace</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">/example</span><span style="color:#800080">&quot;</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">extends</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">struts-default</span><span style="color:#800080">&quot;&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#800080">&lt;action</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">name</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">HelloWorld</span><span style="color:#800080">&quot;</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">class</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">example.HelloWorld</span><span style="color:#800080">&quot;&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">            </span><span style="color:#800080">&lt;result&gt;</span><span style="color:#000000">/example/HelloWorld.JSP</span><span style="color:#800080">&lt;/result&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#800080">&lt;/action&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;/package&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">&lt;/struts&gt;</span></span>
+</code></pre></div>
+
+<ul>
+  <li>línea 8: define un paquete llamado <i>example </i>que extiende el paquete <i>struts-default</i>. Este paquete administra los URL del tipo <i>/example/Action </i>(espacio de nombres <i>/example</i>).
+  </li>
+  <li>líneas 9-11: definen una acción denominada <i>HelloWorld </i>(atributo <i>name</i>) que, por lo tanto, corresponde a URL <i>/example/Helloworld</i>. Esta acción es procesada por una instancia de la clase <i>example.HelloWorld </i>(atributo <i>class</i>).
+    <ul>
+      <li>El controlador [FilterDispatcher] ejecutará el método <i>execute </i>de esta clase.
+      </li>
+      <li>Este método devolverá una cadena de caracteres denominada <b>«clave de navegación</b>».
+      </li>
+      <li>Las diferentes claves de navegación deben definirse mediante etiquetas <i>&lt;result name=&quot;clave&quot;/&gt; </i>(línea 10). Si no existe el atributo <i>name</i>, se utiliza por defecto la clave <i>success</i>. Este es el caso anterior. Por lo tanto, el método <i>execute </i>de la clase <i>example.HelloWorld </i>debe devolver al controlador [FilterDispatcher] la clave <i>success</i>.
+      </li>
+      <li>El controlador [FilterDispatcher], a su vez, muestra la página [/example/HelloWorld.JSP] (línea 10).
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>Si fusionamos los dos archivos [struts.xml] y [example.xml], eliminemos el paquete <em>default</em>, que parece innecesario, todo ocurre como si tuviéramos el archivo [struts.xml] reducido únicamente al archivo [example.xml].</p>
+<p><span id="refheading99751454977699" name="refheading99751454977699" class="odt-bookmark-anchor"></span></p>
+<h2 id="26-la-accion-helloworld">2.6. <span style="color: #4f81bd">La acción HelloWorld</span></h2>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><img src="images/10000000000001750000010DA8AB37FB.png" width="187" height="135" style="display:inline-block; margin:4px;width:4.935cm;height:3.56cm;" class="odt-zoomable" data-zoom-src="images/10000000000001750000010DA8AB37FB.png" /></td></tr></table>
+
+<p>Según el archivo [struts.xml] analizado, la acción <em>HelloWorld</em> se activa cuando el archivo URL solicitado por el cliente es <em>/example/HelloWorld</em>. A continuación, se ejecuta su método <em>execute</em>. Este debe devolver una clave de navegación. Hemos visto que solo había una: <em>success,</em> y que, en ese caso, se enviaba la página <em>/example/HelloWorld.JSP</em> como respuesta al usuario.</p>
+<p>El código de la acción <em>HelloWorld</em> es el siguiente:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">example</span><span class="p">;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">com.opensymphony.xwork2.ActionSupport</span><span class="p">;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HelloWorld</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ActionSupport</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">execute</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">        </span><span class="n">setMessage</span><span class="p">(</span><span class="n">getText</span><span class="p">(</span><span class="n">MESSAGE</span><span class="p">));</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">SUCCESS</span><span class="p">;</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">MESSAGE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;HelloWorld.message&quot;</span><span class="p">;</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getMessage</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setMessage</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+  <li>línea 5: la clase <i>HelloWorld </i>deriva de la clase <i>ActionSupport </i>de Struts 2. Esto ocurre prácticamente siempre. Esto permite aprovechar ciertos métodos, como el método <i>getText </i>de la línea 8.
+  </li>
+  <li>líneas 7-10: el método <i>execute, </i>que se ejecuta al invocar el controlador de Struts. Sabemos que debe devolver una cadena de caracteres, de ahí su firma en la línea 7. Aquí devolverá la constante SUCCESS, definida también en <i>ActionSupport</i>. De esta manera, se definen otras constantes para el resultado del método <i>execute</i>:
+  </li>
+</ul>
+
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div markdown="block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Constante
+</code></pre></div>
+</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div markdown="block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Valeur
+</code></pre></div>
+</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">SUCCESS</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">&quot;<i>success</i>&quot;</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">ERROR</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">&quot;<i>error</i>&quot;</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">INPUT</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">&quot;<i>input</i>&quot;</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">LOGIN</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">&quot;<i>login</i>&quot;</div></td></tr></table>
+
+<p>Así que aquí, el método <em>execute</em> devuelve la cadena <em>success</em>. Si nos referimos al archivo [struts.xml], entonces será la página <em>/example/HelloWorld.JSP</em> la que se le mostrará al usuario como respuesta.</p>
+<ul>
+  <li>Línea 8: el método <i>execute </i>inicializa el campo <i>message </i>de la línea 14 con el valor de <i>getText(&quot; HelloWorld.message &quot;)</i>. El método <i>getText </i>pertenece a la clase padre <i>ActionSupport</i>. Permite recuperar un texto de un archivo según el idioma utilizado. Por defecto, se utilizará aquí el archivo <i>package.properties </i>ubicado en el mismo paquete que la acción. Este archivo viene en dos versiones:
+  </li>
+</ul>
+
+<p>El archivo [package.properties] es el siguiente:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>HelloWorld.message= Struts is up and running ...
+</code></pre></div>
+<p>Es una secuencia de líneas de texto con el formato <em>clé=valeur</em>. Si se utiliza este archivo, <em>getText(&quot;HelloWorld.message&quot;)</em> tendrá como valor <em>«Struts is up and running ...»</em></p>
+<p>El archivo [package_es.properties] es el siguiente:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>HelloWorld.message= ¡Struts está bien! ...
+</code></pre></div>
+<p>Si el idioma utilizado por el navegador del cliente es el español (atributo <strong>«es</strong>», en package_es.properties), <em>getText («HelloWorld.message»)</em> tendrá como valor <em>¡Struts está bien! ...</em> En todos los demás casos, se utilizará el archivo [package.properties].</p>
+<p><span id="refheading99771454977699" name="refheading99771454977699" class="odt-bookmark-anchor"></span></p>
+<h2 id="27-la-vista-helloworldjsp">2.7. <span style="color: #4f81bd">La vista HelloWorld.JSP</span></h2>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><img src="images/1000000000000141000001196A3960D1.png" width="161" height="141" style="display:inline-block; margin:4px;width:4.247cm;height:3.718cm;" class="odt-zoomable" data-zoom-src="images/1000000000000141000001196A3960D1.png" /></td></tr></table>
+
+<p>Este es el último elemento del rompecabezas de Struts. Es la vista que se muestra cuando se solicita el archivo URL /example/HelloWorld. Ya hemos visto el laberinto por el que pasa la solicitud inicial para finalmente mostrar esta respuesta. El código de la página es el siguiente:</p>
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-html">
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#bf5f3f">&lt;%@</span> <span style="color:#3f7f7f">page</span> <span style="color:#7f007f">contentType</span><span style="color:#000000">=</span><span style="font-style:italic;color:#2a00ff">&quot;text/html; charset=UTF-8&quot;</span> <span style="color:#bf5f3f">%&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#bf5f3f">&lt;%@</span> <span style="color:#3f7f7f">taglib</span> <span style="color:#7f007f">prefix</span><span style="color:#000000">=</span><span style="font-style:italic;color:#2a00ff">&quot;s&quot;</span> <span style="color:#7f007f">uri</span><span style="color:#000000">=</span><span style="font-style:italic;color:#2a00ff">&quot;/struts-tags&quot;</span> <span style="color:#bf5f3f">%&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#008080">&lt;</span><span style="color:#3f7f7f">html</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#008080">&lt;</span><span style="color:#3f7f7f">head</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#008080">&lt;</span><span style="color:#3f7f7f">title</span><span style="color:#008080">&gt;&lt;</span><span style="color:#3f7f7f">s:text</span> <span style="color:#7f007f">name</span><span style="color:#000000">=</span><span style="font-style:italic;color:#2a00ff">&quot;HelloWorld.message&quot;</span><span style="color:#008080">/&gt;&lt;/</span><span style="color:#3f7f7f">title</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#008080">&lt;/</span><span style="color:#3f7f7f">head</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#008080">&lt;</span><span style="color:#3f7f7f">body</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#008080">&lt;</span><span style="color:#3f7f7f">h2</span><span style="color:#008080">&gt;&lt;</span><span style="color:#3f7f7f">s:property</span> <span style="color:#7f007f">value</span><span style="color:#000000">=</span><span style="font-style:italic;color:#2a00ff">&quot;message&quot;</span><span style="color:#008080">/&gt;&lt;/</span><span style="color:#3f7f7f">h2</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#008080">&lt;</span><span style="color:#3f7f7f">h3</span><span style="color:#008080">&gt;</span><span style="color:#000000">Languages</span><span style="color:#008080">&lt;/</span><span style="color:#3f7f7f">h3</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#008080">&lt;</span><span style="color:#3f7f7f">ul</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">            </span><span style="color:#008080">&lt;</span><span style="color:#3f7f7f">li</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">                </span><span style="color:#008080">&lt;</span><span style="color:#3f7f7f">s:url</span> <span style="color:#7f007f">id</span><span style="color:#000000">=</span><span style="font-style:italic;color:#2a00ff">&quot;URL&quot;</span> <span style="color:#7f007f">action</span><span style="color:#000000">=</span><span style="font-style:italic;color:#2a00ff">&quot;HelloWorld&quot;</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">                    </span><span style="color:#008080">&lt;</span><span style="color:#3f7f7f">s:param</span> <span style="color:#7f007f">name</span><span style="color:#000000">=</span><span style="font-style:italic;color:#2a00ff">&quot;request_locale&quot;</span><span style="color:#008080">&gt;</span><span style="color:#000000">en</span><span style="color:#008080">&lt;/</span><span style="color:#3f7f7f">s:param</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">                </span><span style="color:#008080">&lt;/</span><span style="color:#3f7f7f">s:url</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">                </span><span style="color:#008080">&lt;</span><span style="color:#3f7f7f">s:a</span> <span style="color:#7f007f">href</span><span style="color:#000000">=</span><span style="font-style:italic;color:#2a00ff">&quot;%{URL}&quot;</span><span style="color:#008080">&gt;</span><span style="color:#000000">English</span><span style="color:#008080">&lt;/</span><span style="color:#3f7f7f">s:a</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">            </span><span style="color:#008080">&lt;/</span><span style="color:#3f7f7f">li</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">            </span><span style="color:#008080">&lt;</span><span style="color:#3f7f7f">li</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">                </span><span style="color:#008080">&lt;</span><span style="color:#3f7f7f">s:url</span> <span style="color:#7f007f">id</span><span style="color:#000000">=</span><span style="font-style:italic;color:#2a00ff">&quot;URL&quot;</span> <span style="color:#7f007f">action</span><span style="color:#000000">=</span><span style="font-style:italic;color:#2a00ff">&quot;HelloWorld&quot;</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">                    </span><span style="color:#008080">&lt;</span><span style="color:#3f7f7f">s:param</span> <span style="color:#7f007f">name</span><span style="color:#000000">=</span><span style="font-style:italic;color:#2a00ff">&quot;request_locale&quot;</span><span style="color:#008080">&gt;</span><span style="color:#000000">es</span><span style="color:#008080">&lt;/</span><span style="color:#3f7f7f">s:param</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">                </span><span style="color:#008080">&lt;/</span><span style="color:#3f7f7f">s:url</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">                </span><span style="color:#008080">&lt;</span><span style="color:#3f7f7f">s:a</span> <span style="color:#7f007f">href</span><span style="color:#000000">=</span><span style="font-style:italic;color:#2a00ff">&quot;%{URL}&quot;</span><span style="color:#008080">&gt;</span><span style="color:#000000">Espanol</span><span style="color:#008080">&lt;/</span><span style="color:#3f7f7f">s:a</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">            </span><span style="color:#008080">&lt;/</span><span style="color:#3f7f7f">li</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#008080">&lt;/</span><span style="color:#3f7f7f">ul</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#008080">&lt;/</span><span style="color:#3f7f7f">body</span><span style="color:#008080">&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#008080">&lt;/</span><span style="color:#3f7f7f">html</span><span style="color:#008080">&gt;</span></span></span>
+</code></pre></div>
+
+<ul>
+  <li>La página utiliza etiquetas HTML (líneas 5, 6, ...) y etiquetas de una biblioteca definida en la línea 3. Todas las etiquetas <b>&lt;s:xx&gt; </b>pertenecen a esta biblioteca.
+  </li>
+  <li>Línea 7: la etiqueta <b>&lt;s:text&gt; </b>permite mostrar un texto diferente según el idioma del navegador del cliente. El atributo name indica la clave que se debe buscar en los archivos de mensajes. Aquí, también, se utilizarán los archivos <i>package_xx.properties</i>. Recordemos que estos contienen únicamente un mensaje con la clave <i>HelloWorld.message</i>.
+  </li>
+  <li>línea 11: la etiqueta <b>&lt;s:property name=&quot;propiedad&quot;&gt; </b>permite escribir el valor de una propiedad de un objeto llamado <i>ActionContext</i>. En este objeto se encuentran:
+    <ul>
+      <li>las propiedades de la acción que se ha ejecutado. <b>name=&quot;message&quot; </b>mostrará el valor del campo <b>«message» </b>de la acción actual. Los métodos <i>get </i>y <i>set </i>asociados al campo son los que se utilizan para obtener su valor o inicializarlo. Por lo tanto, estos métodos deben existir.
+      </li>
+      <li>los atributos de la solicitud actual indicados como <i>&lt;s:property name=&quot;#request[&#x27;clé&#x27;]&quot;&gt;</i>
+      </li>
+      <li>los atributos de la sesión del usuario, indicados como <i>&lt;s:property name=&quot;#session[&#x27;clé&#x27;]&quot;&gt;</i>
+      </li>
+      <li>los atributos de la propia aplicación, indicados como <i>&lt;s:property name=&quot;#application[&#x27;clé&#x27;]&quot;&gt;</i>
+      </li>
+      <li>los parámetros enviados por el navegador del cliente, indicados como <i>&lt;s:property name=&quot;#parameters[&#x27;clé&#x27;]&quot;&gt;</i>
+      </li>
+      <li>la notación <i>&lt;s:property name=&quot;#attr[&#x27;clé&#x27;]&quot;&gt; </i>muestra el valor de un objeto buscado en la página, la consulta, la sesión y la aplicación, en ese orden.
+      </li>
+    </ul>
+  </li>
+  <li>líneas 16-18: la etiqueta <b>&lt;s:url&gt; </b>sirve para definir una URL. El atributo <b>id </b>le da un nombre a la URL que se va a crear. Este nombre se utiliza posteriormente en la línea 19. El atributo <b>action </b>indica a qué acción debe apuntar la URL.
+  </li>
+  <li>línea 17: la etiqueta <b>&lt;s:param ..&gt; </b>permite agregar parámetros a la URL en el formato <i>?param1=valeur1&amp;param2=valeur2&amp;...</i>. Aquí, el parámetro agregado será <i>?request_locale=es</i>.
+  </li>
+</ul>
+
+<p>Al final, el archivo URL generado será el siguiente:</p>
+<div class="odt-code-rich" data-linenums="false" style="counter-reset: odtline 0;"><pre><code class="language-html">
+<span class="odt-code-line"><span class="odt-code-line-content"><a href="view-source:http://localhost:8084/exemple-01/example/HelloWorld.action;jsessionid=2C90FEA191E7F1F95F4F86B0EAF75D52?request_locale=en"><span style="font-style:italic">/exemple-01/example/HelloWorld.action?request_locale=en</span></a></span></span>
+</code></pre></div>
+
+<p>Para entender este URL, hay que recordar que la página [HelloWorld.JSP] se muestra en dos casos:</p>
+<ul>
+  <li>(continuación)
+    <ul>
+      <li>a petición directa del URL [/exemple-01/example/HelloWorld.JSP]
+      </li>
+      <li>a petición de la acción [/exemple-01/example/HelloWorld.action]
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>En ambos casos, la ruta de URL es <em>/exemple-01/example.</em>. La etiqueta <em>&lt;s:url action= &quot;... &quot;&gt;</em> agrega la acción definida por el atributo <em>action</em> a esta ruta. De esta manera se obtiene <em>/ejemplo-01/ejemplo/HelloWorld</em>. Luego agrega el sufijo .<em>action</em> al URL anterior, así como los parámetros del URL, si los hay. El archivo URL resultante <em>/ejemplo-01/ejemplo/HelloWorld.action?request_locale=en</em> llamará a la acción <em>HelloWorld</em> definida en el archivo [struts.xml], al tiempo que pasa el parámetro <em>request_locale=en</em>. Este último no será procesado por la acción <em>HelloWorld</em>, sino por uno de los interceptores de Struts, el que se encarga de la internacionalización de las páginas. El parámetro <em>request_locale</em> será reconocido y procesado. El idioma de las páginas pasará a ser el inglés (<em>en</em>).</p>
+<ul>
+  <li>línea 19: define un enlace HTML. El atributo <b>href </b>de la etiqueta <b>&lt;a&gt; </b>espera una cadena de caracteres. Aquí queremos usar el valor de URL, definido en la línea 16 y con el id <b>URL</b>. Para ello, se escribe <i>href=&quot;%{URL}&quot;</i>. La variable <i>URL </i>se evalúa y su valor se asigna al atributo <i>href</i>. En la mayoría de los casos, la evaluación de las variables es implícita. Por ejemplo, cuando se escribe
+  </li>
+</ul>
+
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>&lt;s:property name= &quot;message &quot;/&gt;
+</code></pre></div>
+<p>se muestra el valor de la propiedad <em>message</em> y no la cadena &quot; <em>message</em> &quot;. Sin embargo, en otros casos, es necesario forzar la evaluación de las variables o propiedades. Si hubiéramos escrito <em>href=&quot;URL&quot;</em>, se habría asignado la cadena <em>URL</em> al atributo <em>href</em>.</p>
+<ul>
+  <li>Líneas 23-27: crean un enlace HTML para cambiar el idioma de las páginas a español.
+  </li>
+</ul>
+
+<p><span id="refheading99791454977699" name="refheading99791454977699" class="odt-bookmark-anchor"></span></p>
+<h2 id="28-ejecucion-de-la-aplicacion">2.8. <span style="color: #4f81bd">Ejecución de la aplicación</span></h2>
+<p>Iniciamos la ejecución del proyecto:</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><img src="images/10000000000003F30000015F311DBFC1.png" width="506" height="176" style="display:inline-block; margin:4px;width:13.376cm;height:4.644cm;" class="odt-zoomable" data-zoom-src="images/10000000000003F30000015F311DBFC1.png" /></td></tr></table>
+
+<ul>
+  <li>En [1], se inicia la ejecución del proyecto [exemple-01]. El servidor web Tomcat se inicia automáticamente si aún no lo estaba. Se solicita URL [/exemple-01] [3]. A continuación, se utiliza el archivo [web.xml]:
+  </li>
+</ul>
+
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-xml">
+<span class="odt-code-line"><span class="odt-code-line-content">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#800080">&lt;web-app</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">version</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">3.0</span><span style="color:#800080">&quot;</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">xmlns</span><span style="color:#800080">=&quot;</span><span style="color:#000080">http://java.sun.com/xml/ns/javaee</span><span style="color:#800080">&quot;</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">xmlns:xsi</span><span style="color:#800080">=&quot;</span><span style="color:#000080">http://www.w3.org/2001/XMLSchema-instance</span><span style="color:#800080">&quot;</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">xsi:schemaLocation</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd</span><span style="color:#800080">&quot;&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;filter&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#800080">&lt;filter-name&gt;</span><span style="color:#000000">struts2</span><span style="color:#800080">&lt;/filter-name&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#800080">&lt;filter-class&gt;</span><span style="color:#000000">org.apache.struts2.dispatcher.FilterDispatcher</span><span style="color:#800080">&lt;/filter-class&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;/filter&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;filter-mapping&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#800080">&lt;filter-name&gt;</span><span style="color:#000000">struts2</span><span style="color:#800080">&lt;/filter-name&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">        &lt;URL-pattern&gt;/*&lt;/URL-pattern&gt;</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;/filter-mapping&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;session-config&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#800080">&lt;session-timeout&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">            30</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#800080">&lt;/session-timeout&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;/session-config&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;welcome-file-list&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#800080">&lt;welcome-file&gt;</span><span style="color:#000000">example/HelloWorld.JSP</span><span style="color:#800080">&lt;/welcome-file&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;/welcome-file-list&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">&lt;/web-app&gt;</span></span>
+</code></pre></div>
+
+<ul>
+  <li>porque en el archivo solicitado URL [/exemple-01] no se especifica ninguna página, por lo que Tomcat utilizará la etiqueta <i>&lt;welcome_file-list&gt; </i>de las líneas 16 y 18. Por lo tanto, se mostrará la página URL <i>/ejemplo-01/ejemplo/HelloWorld.JSP</i>.
+  </li>
+  <li>Dado que Struts 2 procesa todas las URL (líneas 8 y 9), esta URL será filtrada por Struts. Como no corresponde a una acción, sino a una página JSP, esta última se mostrará.
+  </li>
+  <li>Lo que vemos en [2] es, por lo tanto, la página <i>HelloWorld.JSP </i>que hemos estudiado.
+  </li>
+  <li>En [4], vemos que la etiqueta <i><span style="color: #008080">&lt;</span></i><i><span style="color: #3f7f7f">title</span></i><i><span style="color: #008080">&gt;&lt;</span></i><i><span style="color: #3f7f7f">s:text </span></i><i><span style="color: #000000">name=</span></i><i><span style="color: #2a00ff">&quot;HelloWorld.message&quot;</span></i><i><span style="color: #008080">/&gt;&lt;</span></i><i><span style="color: #3f7f7f">/title</span></i><i><span style="color: #008080">&gt; </span></i>no ha surtido efecto, ni tampoco la etiqueta <i><span style="color: #008080">&lt;</span></i><i><span style="color: #3f7f7f">h2</span></i><i><span style="color: #008080">&gt;&lt;</span></i><i><span style="color: #3f7f7f">s:property </span></i><i><span style="color: #000000">value=</span></i><i><span style="color: #2a00ff">&quot;message&quot;</span></i><i><span style="color: #008080">/&gt;&lt;</span></i><i><span style="color: #3f7f7f">/h2</span></i><i><span style="color: #008080">&gt;</span></i><span style="color: #008080">. </span>La razón es que no se ha llamado a ninguna acción. Por lo tanto, no se ejecutó la lista de interceptores que se ejecutan antes de la acción, en particular el que gestiona la internacionalización. La etiqueta de internacionalización <i>&lt;s:text ...&gt; </i>no se pudo procesar correctamente. Además, la propiedad <i>message </i>que hace referencia al campo «message» de la clase <i>Action1 </i>no existe. De ahí que no se muestre nada.
+  </li>
+</ul>
+
+<p>Ahora, sigamos el enlace [English]. Obtenemos la siguiente página:</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><img src="images/10000000000002F200000142F6A22481.png" width="377" height="161" style="display:inline-block; margin:4px;width:9.975cm;height:4.26cm;" class="odt-zoomable" data-zoom-src="images/10000000000002F200000142F6A22481.png" /></td></tr></table>
+
+<ul>
+  <li>en [1], la URL solicitada. Ya hemos explicado cómo se forma este URL. En esta ocasión se solicita una acción de Struts: la acción <i>HelloWorld </i>definida en [example.xml].
+  </li>
+</ul>
+
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-java">
+<span class="odt-code-line"><span class="odt-code-line-content">&lt;struts&gt;</span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;package</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">name</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">example</span><span style="color:#800080">&quot;</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">namespace</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">/example</span><span style="color:#800080">&quot;</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">extends</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">struts-default</span><span style="color:#800080">&quot;&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#800080">&lt;action</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">name</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">HelloWorld</span><span style="color:#800080">&quot;</span><span style="font-style:italic;color:#008080"> </span><span style="color:#808000">class</span><span style="color:#800080">=&quot;</span><span style="color:#0000ff">example.HelloWorld</span><span style="color:#800080">&quot;&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">            </span><span style="color:#800080">&lt;result&gt;</span><span style="color:#000000">/example/HelloWorld.JSP</span><span style="color:#800080">&lt;/result&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">        </span><span style="color:#800080">&lt;/action&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content"><span style="color:#000000">    </span><span style="color:#800080">&lt;/package&gt;</span></span></span>
+<span class="odt-code-line"><span class="odt-code-line-content">&lt;/struts&gt;</span></span>
+</code></pre></div>
+
+<ul>
+  <li>Se ejecutó el método <i>execute </i>de esta acción. Hemos visto que devolvía la clave <i>success</i>. De la línea 4 anterior, se deduce que la página <i>/example/HelloWorld.JSP </i>se devuelve como respuesta al cliente. Esto es lo que vemos en [3].
+  </li>
+  <li>En [1], vemos que la página URL solicitada se configura mediante el parámetro <i>request_locale=en</i>. A partir de ahora, el idioma de las páginas será el inglés. De hecho, esta elección de idioma se almacena en la sesión del usuario, quien conservará esta elección hasta que la cambie.
+  </li>
+  <li>En [2] y [3], se puede observar la internacionalización en acción. Las etiquetas <i><span style="color: #008080">&lt;</span></i><i><span style="color: #3f7f7f">title</span></i><i><span style="color: #008080">&gt;&lt;</span></i><i><span style="color: #3f7f7f">s:text </span></i><i><span style="color: #000000">name=</span></i><i><span style="color: #2a00ff">&quot;HelloWorld.message&quot;</span></i><i><span style="color: #008080">/&gt;&lt;</span></i><i><span style="color: #3f7f7f">/title</span></i><i><span style="color: #008080">&gt; </span></i>y <i><span style="color: #008080">&lt;</span></i><i><span style="color: #3f7f7f">h2</span></i><i><span style="color: #008080">&gt;&lt;</span></i><i><span style="color: #3f7f7f">s:property </span></i><i><span style="color: #000000">value=</span></i><i><span style="color: #2a00ff">&quot;message&quot;</span></i><i><span style="color: #008080">/&gt;&lt;</span></i><i><span style="color: #3f7f7f">/h2</span></i><i><span style="color: #008080">&gt; </span></i>han surtido efecto en esta ocasión.
+  </li>
+</ul>
+
+<p>Si ahora seleccionamos el enlace [Espanol], obtenemos la página en español:</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><img src="images/10000000000002DE000001595CD6C033.png" width="367" height="173" style="display:inline-block; margin:4px;width:9.71cm;height:4.565cm;" class="odt-zoomable" data-zoom-src="images/10000000000002DE000001595CD6C033.png" /></td></tr></table>
+
+<p><span id="refheading99811454977699" name="refheading99811454977699" class="odt-bookmark-anchor"></span></p>
+<h2 id="29-conclusion">2.9. <span style="color: #4f81bd"><strong>Conclusion</strong></span></h2>
+<p>Hemos analizado un ejemplo generado automáticamente por el complemento Struts 2 para NetBeans. Hemos observado que resulta bastante difícil seguir el procesamiento de una solicitud. Intervienen los siguientes elementos:</p>
+<ul>
+  <li>la configuración [web.xml], [struts.xml]
+  </li>
+  <li>la acción ejecutada: interceptores y método <i>execute</i>.
+  </li>
+</ul>
+
+<p>Al principio, el funcionamiento de Struts 2 puede parecer complejo. Se necesita un poco de tiempo para acostumbrarse. A continuación, presentaremos una serie de ejemplos que aclaran cada uno un aspecto específico de Struts.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner">
+
+      <div>
+        <a href="https://stahe.github.io" target="_blank">
+          https://stahe.github.io
+        </a>
+        <br>
+        Este curso-tutorial, escrito por <strong>Serge Tahé</strong>, se pone a disposición del público de acuerdo con los términos de la
+        <em>Licencia Creative Commons Reconocimiento – Sin uso comercial –
+        Compartir igual 3.0 Inalterada</em>.
+
+      </div>
+
+    </div>
+  </div>
+
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.indexes", "navigation.expand", "toc.integrate", "navigation.top"], "search": "assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="javascripts/focus.js"></script>
+      
+    
+  </body>
+</html>
